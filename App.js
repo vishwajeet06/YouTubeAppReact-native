@@ -5,7 +5,7 @@ import { StyleSheet, Text, View } from "react-native";
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Youtube App Frontend</Text>
+      <Text>Youtube App Frontend hybrid</Text>
       <StatusBar style="auto" />
     </View>
   );
