@@ -1,13 +1,11 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import Constant from "expo-constants";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 export default function Header() {
-  const iconColor = "#212121";
-
   return (
     <View style={styles.Header}>
       <View style={styles.logo}>
@@ -15,11 +13,12 @@ export default function Header() {
         <Text style={styles.name}>YouTube</Text>
       </View>
       <View style={styles.icons}>
-        <Ionicons name="md-videocam-sharp" size={28} color={iconColor} />
-        <Ionicons name="md-search" size={28} color={iconColor} />
+        <FontAwesome5 name="chromecast" size={iconSize} color={iconColor} />
+        <Ionicons name="md-videocam-sharp" size={iconSize} color={iconColor} />
+        <Ionicons name="md-search" size={iconSize} color={iconColor} />
         <MaterialCommunityIcons
           name="account-circle"
-          size={28}
+          size={iconSize}
           color={iconColor}
         />
       </View>
@@ -27,33 +26,35 @@ export default function Header() {
   );
 }
 const iconColor = "#212121";
+const iconSize = 24;
 
 const styles = StyleSheet.create({
   Header: {
-    height: 45,
+    height: 50,
     backgroundColor: "white",
-    marginTop: Constant.statusBarHeight,
-    backgroundColor: "yellow",
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
+    elevation: 12,
   },
   logo: {
     flexDirection: "row",
     margin: 5,
-    alignItems: "center",
+    // alignItems: "center",
   },
   name: {
     fontSize: 22,
     marginLeft: 5,
-    fontWeight: "bold",
+    fontWeight: "400",
     color: iconColor,
   },
   icon: {
     marginLeft: 18,
   },
   icons: {
+    margin: 5,
     flexDirection: "row",
-    alignItems: "center",
+    // alignItems: "center",
     justifyContent: "space-around",
     width: 150,
   },
