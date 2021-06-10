@@ -1,37 +1,60 @@
 import React, { useState } from "react";
-import {
-  Dimensions,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
+import { FlatList, StyleSheet, TextInput, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import VideoCard from "../components/VideoCard";
 
+const API_KEY = "AIzaSyAuy2LIqaHtRnZOMScEKnq6FXLWixB8w_A";
+
 export default function Search() {
-  const [item, setItem] = useState("");
+  const [value, setValue] = useState("");
+  const [videoData, setVideoData] = useState([]);
+
+  const fetchData = (item) => {
+    const API = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelType=any&maxResults=30&q=${item}&type=video&key=${API_KEY}`;
+    fetch(API)
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log(data);
+        setVideoData(data.items);
+      });
+  };
   return (
     <View style={styles.container}>
       <View style={styles.searchBar}>
         <Ionicons name="arrow-back" size={32} color={iconColor} />
         <TextInput
           style={styles.area}
-          value={item}
+          value={value}
           placeholder={"Search YouTube"}
-          onChangeText={(text) => setItem(text)}
+          onChangeText={(text) => setValue(text)}
         />
-        <Ionicons name="md-send" size={32} color={iconColor} />
+        <Ionicons
+          name="md-send"
+          size={32}
+          color={iconColor}
+          onPress={() => fetchData(value)}
+        />
       </View>
-      <ScrollView>
+      {/* <ScrollView>
         <VideoCard />
         <VideoCard />
         <VideoCard />
         <VideoCard />
         <VideoCard />
         <VideoCard />
-      </ScrollView>
+      </ScrollView> */}
+      <FlatList
+        data={videoData}
+        renderItem={({ item }) => {
+          return (
+            <VideoCard
+              videoId={item.id.videoId}
+              title={item.snippet.title}
+              channel={item.snippet.channelTitle}
+            />
+          );
+        }}
+      />
     </View>
   );
 }

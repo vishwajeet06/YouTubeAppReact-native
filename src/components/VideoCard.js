@@ -1,21 +1,21 @@
 import React from "react";
 import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
 
-export default function VideoCard() {
+export default function VideoCard(props) {
   return (
     <View style={styles.container}>
       <Image
         source={{
-          uri: "https://cdn.pixabay.com/photo/2015/12/26/05/53/wood-1108307_1280.jpg",
+          uri: `https://i.ytimg.com/vi/${props.videoId}/maxresdefault.jpg`,
         }}
         style={styles.Image}
       />
       <View style={styles.detail}>
         <Text style={styles.Stitle} ellipsizeMode={"tail"} numberOfLines={3}>
-          This is song gewhg ghreiogh yehri
+          {props.title}
         </Text>
-        <Text style={{ fontSize: 10 }}>Channel Name</Text>
-        <Text style={{ fontSize: 10 }}>Views</Text>
+        <Text style={{ fontSize: 12 }}>{props.channel}</Text>
+        <Text style={{ fontSize: 12 }}>Views</Text>
       </View>
     </View>
   );
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
   },
   Stitle: {
-    fontSize: 15,
+    fontSize: 18,
     width: Dimensions.get("screen").width / 2,
   },
 });
