@@ -6,7 +6,7 @@ export default function VideoCard(props) {
     <View style={styles.container}>
       <Image
         source={{
-          uri: `https://i.ytimg.com/vi/${props.videoId}/maxresdefault.jpg`,
+          uri: `https://i.ytimg.com/vi/${props.videoId}/mqdefault.jpg`,
         }}
         style={styles.Image}
       />

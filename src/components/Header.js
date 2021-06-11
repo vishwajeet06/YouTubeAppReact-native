@@ -4,8 +4,13 @@ import { AntDesign } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
+import Constant from "expo-constants";
+import { useNavigation } from "@react-navigation/core";
+import Search from "../Screen/Search";
 
 export default function Header() {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.Header}>
       <View style={styles.logo}>
@@ -15,7 +20,12 @@ export default function Header() {
       <View style={styles.icons}>
         <FontAwesome5 name="chromecast" size={iconSize} color={iconColor} />
         <Ionicons name="md-videocam-sharp" size={iconSize} color={iconColor} />
-        <Ionicons name="md-search" size={iconSize} color={iconColor} />
+        <Ionicons
+          name="md-search"
+          size={iconSize}
+          color={iconColor}
+          onPress={() => navigation.navigate("Search")}
+        />
         <MaterialCommunityIcons
           name="account-circle"
           size={iconSize}
@@ -25,11 +35,12 @@ export default function Header() {
     </View>
   );
 }
-const iconColor = "#212121";
+const iconColor = "gray";
 const iconSize = 24;
 
 const styles = StyleSheet.create({
   Header: {
+    marginTop: Constant.statusBarHeight,
     height: 50,
     backgroundColor: "white",
     flexDirection: "row",

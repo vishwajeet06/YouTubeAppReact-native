@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 import Card from "../components/Card";
 import Header from "../components/Header";
 
-export default function Home() {
+export default function Home({ navigation }) {
   return (
     <View style={styles.Home}>
       <Header />

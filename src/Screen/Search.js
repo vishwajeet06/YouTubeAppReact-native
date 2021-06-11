@@ -1,27 +1,53 @@
 import React, { useState } from "react";
-import { FlatList, StyleSheet, TextInput, View } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  StyleSheet,
+  TextInput,
+  View,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import VideoCard from "../components/VideoCard";
+import Constant from "expo-constants";
+import { useNavigation } from "@react-navigation/core";
+import { useDispatch, useSelector } from "react-redux";
 
 const API_KEY = "AIzaSyAuy2LIqaHtRnZOMScEKnq6FXLWixB8w_A";
 
-export default function Search() {
+export default function Search({ navigation }) {
   const [value, setValue] = useState("");
-  const [videoData, setVideoData] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const dispatch = useDispatch();
+
+  // const [videoData, setVideoData] = useState([]);
+  const videoData = useSelector((state) => {
+    return state;
+  });
 
   const fetchData = (item) => {
+    const navigation = useNavigation();
+
+    setLoading(true);
     const API = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelType=any&maxResults=30&q=${item}&type=video&key=${API_KEY}`;
     fetch(API)
       .then((res) => res.json())
       .then((data) => {
+        setLoading(false);
         // console.log(data);
-        setVideoData(data.items);
+        // setVideoData(data.items);
+        dispatch({ type: "add", payload: data.items });
       });
   };
   return (
     <View style={styles.container}>
       <View style={styles.searchBar}>
-        <Ionicons name="arrow-back" size={32} color={iconColor} />
+        <Ionicons
+          name="arrow-back"
+          size={32}
+          color={iconColor}
+          onPress={() => navigation.goBack()}
+        />
         <TextInput
           style={styles.area}
           value={value}
@@ -35,16 +61,17 @@ export default function Search() {
           onPress={() => fetchData(value)}
         />
       </View>
-      {/* <ScrollView>
-        <VideoCard />
-        <VideoCard />
-        <VideoCard />
-        <VideoCard />
-        <VideoCard />
-        <VideoCard />
-      </ScrollView> */}
+      {loading ? (
+        <ActivityIndicator
+          size="large"
+          color="black"
+          style={{ marginTop: 30 }}
+        />
+      ) : null}
+
       <FlatList
         data={videoData}
+        keyExtractor={(item) => item.id.videoId}
         renderItem={({ item }) => {
           return (
             <VideoCard
@@ -58,11 +85,12 @@ export default function Search() {
     </View>
   );
 }
-const iconColor = "black";
+const iconColor = "gray";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: Constant.statusBarHeight,
   },
   searchBar: {
     height: 50,
