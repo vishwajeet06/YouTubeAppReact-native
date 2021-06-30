@@ -9,25 +9,17 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import VideoCard from "../components/VideoCard";
 import Constant from "expo-constants";
-import { useNavigation } from "@react-navigation/core";
-import { useDispatch, useSelector } from "react-redux";
+// import { useNavigation } from "@react-navigation/core";
 
 const API_KEY = "AIzaSyAuy2LIqaHtRnZOMScEKnq6FXLWixB8w_A";
 
 export default function Search({ navigation }) {
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState(false);
-
-  const dispatch = useDispatch();
-
-  // const [videoData, setVideoData] = useState([]);
-  const videoData = useSelector((state) => {
-    return state;
-  });
+  const [videoData, setVideoData] = useState([]);
 
   const fetchData = (item) => {
-    const navigation = useNavigation();
-
+    // const navigation = useNavigation();
     setLoading(true);
     const API = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelType=any&maxResults=30&q=${item}&type=video&key=${API_KEY}`;
     fetch(API)
@@ -35,8 +27,7 @@ export default function Search({ navigation }) {
       .then((data) => {
         setLoading(false);
         // console.log(data);
-        // setVideoData(data.items);
-        dispatch({ type: "add", payload: data.items });
+        setVideoData(data.items);
       });
   };
   return (

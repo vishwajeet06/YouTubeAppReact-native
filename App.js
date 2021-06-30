@@ -13,13 +13,9 @@ import Subscribe from "./src/Screen/Subscribe";
 import Library from "./src/Screen/Library";
 import { Entypo } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
-import { createStore } from "redux";
-import { Provider } from "react-redux";
-import { reducer } from "./src/reducers/reducer";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
-const store = createStore(reducer);
 
 const RootHome = () => {
   return (
@@ -57,15 +53,13 @@ const RootHome = () => {
 
 export default function App() {
   return (
-    <Provider store={store}>
-      <NavigationContainer>
-        <Stack.Navigator headerMode="none">
-          <Stack.Screen name="RootHome" component={RootHome} />
-          <Stack.Screen name="Search" component={Search} />
-          <Stack.Screen name="Videoplayer" component={VideoPlayer} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </Provider>
+    <NavigationContainer>
+      <Stack.Navigator headerMode="none">
+        <Stack.Screen name="RootHome" component={RootHome} />
+        <Stack.Screen name="Search" component={Search} />
+        <Stack.Screen name="Videoplayer" component={VideoPlayer} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
